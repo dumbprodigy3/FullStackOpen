@@ -1,0 +1,17 @@
+sequenceDiagram
+    actor user
+    participant browser
+    participant server
+    participant database
+
+    user->>browser: Add new note and press 'Save'
+    browser-->>browser: Add new note to notes list locally
+    browser-->>browser: Re-draw notes list HTML using server JS and including new note
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+    activate server
+    activate database
+    server-->>database: insert new note into notes list
+    server-->>browser: 201 response code
+    deactivate database
+    deactivate server
+    Note right of server: Update the database with the new note
